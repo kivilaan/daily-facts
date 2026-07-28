@@ -45,15 +45,30 @@ python3 -m http.server 8000
 
 ## Hosting on GitHub Pages
 
-1. Push this repo to GitHub (on the default branch you want to publish).
-2. In **Settings → Pages**, set "Deploy from a branch", pick that branch
-   and the `/ (root)` folder.
-3. In **Settings → Actions → General → Workflow permissions**, select
-   "Read and write permissions" so the daily job can commit
-   `data/daily.json` / `data/history.json` back to the repo.
+This repo ships two workflows:
 
-The workflow runs at 03:00 UTC daily and can also be triggered manually
-from the **Actions** tab ("Run workflow").
+- `.github/workflows/daily-fact-update.yml` — picks 5 new facts every day
+  and commits `data/daily.json` / `data/history.json`.
+- `.github/workflows/deploy-pages.yml` — republishes the site to GitHub
+  Pages on every push to the default branch (so it also fires right after
+  the daily fact update commits).
+
+GitHub Pages only publishes for free on **public** repositories (private
+repos need a paid GitHub plan). Two settings have to be flipped once by a
+repo admin in the web UI — they can't be set via the GitHub API tools used
+to build this:
+
+1. **Settings → General → Danger Zone → Change visibility → Make public.**
+2. **Settings → Actions → General → Workflow permissions** — select "Read
+   and write permissions" so the daily job can commit its updates.
+3. The first run of `deploy-pages.yml` will attempt to enable Pages itself
+   (via `actions/configure-pages`) with source "GitHub Actions". If that
+   step fails, enable it manually once at **Settings → Pages → Build and
+   deployment → Source → GitHub Actions**, then re-run the workflow.
+
+After that, every push (including the daily automated fact update) will
+redeploy the live site automatically. You can also trigger either workflow
+manually from the **Actions** tab ("Run workflow").
 
 ## Adding more facts
 
