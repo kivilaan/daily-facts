@@ -1,11 +1,11 @@
 {
-  "date": "2026-09-21",
+  "date": "2026-09-22",
   "factIds": [
-    "hist-05",
-    "hist-10",
-    "tech-02",
-    "geo-01",
-    "hist-09"
+    "hist-08",
+    "tech-01",
+    "tech-08",
+    "bio-10",
+    "geo-02"
   ],
-  "generatedAt": "2026-09-21T08:39:24.647Z"
+  "generatedAt": "2026-09-22T08:18:34.760Z"
 }
